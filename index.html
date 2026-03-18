@@ -125,6 +125,19 @@ transition:transform 0.4s;
 #carouselImage:hover{  
 transform:scale(1.05);  
 }  
+@keyframes fall{
+
+0%{
+transform:translateY(-10px) rotate(0deg);
+opacity:1;
+}
+
+100%{
+transform:translateY(110vh) rotate(360deg);
+opacity:0;
+}
+
+}
   
 </style>  </head>  <body>  <div id="loader">  
 <h1>Preparing something special for you 🎁</h1>  
@@ -360,7 +373,34 @@ setTimeout(showNextStory,3000)
   
 }  
   
-}  
+}
+function createLily(){
+
+  console.log("lily created");
+
+let lily=document.createElement("div");
+
+lily.innerHTML='<img src="lily.png" width="30">';
+
+lily.style.position="fixed";
+lily.style.top="-10px";
+lily.style.left=Math.random()*window.innerWidth+"px";
+lily.style.fontSize=(20+Math.random()*20)+"px";
+lily.style.opacity=Math.random();
+
+lily.style.pointerEvents="none";
+lily.style.animation="fall 6s linear";
+
+document.body.appendChild(lily);
+
+setTimeout(()=>{
+lily.remove();
+},6000);
+
+}
+
+setInterval(createLily,900);
   
-</script>  </body>  
+</script> 
+ </body>  
 </html>
