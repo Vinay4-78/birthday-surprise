@@ -1,0 +1,366 @@
+<!DOCTYPE html>  <html>  
+<head>  
+<title>Birthday Surprise</title>  
+<meta name="viewport" content="width=device-width, initial-scale=1">  <style>  
+  
+html{  
+scroll-behavior:smooth;  
+}  
+  
+body{  
+margin:0;  
+font-family:Arial;  
+text-align:center;  
+background:linear-gradient(-45deg,#2b1055,#1a0633,#4b2c92,#3b0f70);  
+background-size:400% 400%;  
+animation:gradientMove 15s ease infinite;  
+color:white;  
+overflow-x:hidden;  
+}  
+  
+@keyframes gradientMove{  
+0%{background-position:0% 50%;}  
+50%{background-position:100% 50%;}  
+100%{background-position:0% 50%;}  
+}  
+  
+.story{  
+opacity:0;  
+transform:scale(0.9);  
+transition:all 0.8s ease;  
+}  
+  
+.story.show{  
+opacity:1;  
+transform:scale(1);  
+}  
+  
+.glass{  
+background:rgba(255,255,255,0.1);  
+padding:30px;  
+margin:40px auto;  
+border-radius:20px;  
+width:90%;  
+max-width:700px;  
+}  
+  
+.storyText{  
+opacity:0.8;  
+font-style:italic;  
+}  
+  
+#loader{  
+position:fixed;  
+top:0;  
+left:0;  
+width:100%;  
+height:100%;  
+background:#2b0a4d;  
+display:flex;  
+justify-content:center;  
+align-items:center;  
+z-index:9999;  
+color:white;  
+font-size:28px;  
+animation:fadeOut 2s ease forwards;  
+animation-delay:3s;  
+}  
+  
+@keyframes fadeOut{  
+0%{opacity:1;}  
+100%{opacity:0;visibility:hidden;}  
+}  
+  
+#giftBox{  
+width:180px;  
+cursor:pointer;  
+animation:giftGlow 2s infinite alternate;  
+}  
+  
+@keyframes giftGlow{  
+0%{transform:scale(1);filter:drop-shadow(0 0 5px #ffb3ff);}  
+100%{transform:scale(1.05);filter:drop-shadow(0 0 20px #ffb3ff);}  
+}  
+  
+.giftOpen{  
+animation:giftOpen 0.8s forwards;  
+}  
+  
+@keyframes giftOpen{  
+0%{transform:scale(1);}  
+50%{transform:scale(1.3);}  
+100%{transform:scale(0);opacity:0;}  
+}  
+  
+button{  
+padding:10px 20px;  
+border:none;  
+border-radius:20px;  
+background:#b388ff;  
+color:white;  
+cursor:pointer;  
+}  
+  
+#birthdayTitle{  
+position:fixed;  
+top:40%;  
+left:50%;  
+transform:translate(-50%,-50%);  
+font-size:45px;  
+display:none;  
+animation:glowText 2s infinite alternate;  
+z-index:9999;  
+}  
+  
+@keyframes glowText{  
+from{ text-shadow:0 0 10px #fff,0 0 20px #ff00ff;}  
+to{ text-shadow:0 0 20px #fff,0 0 40px #ff66ff;}  
+}  
+  
+#carouselImage{  
+max-width:90%;  
+transition:transform 0.4s;  
+}  
+  
+#carouselImage:hover{  
+transform:scale(1.05);  
+}  
+  
+</style>  </head>  <body>  <div id="loader">  
+<h1>Preparing something special for you 🎁</h1>  
+</div>  <div id="giftScreen">  <h1>Your Birthday Gift 🎁(Put on your headphones for better experience😉😎)
+</h1>  <img src="gift.png" id="giftBox" onclick="openGift()">  <div id="birthdayTitle">  
+🎉 Happy Birthday Siel 🎉  
+</div>  </div>  <div id="lockScreen" style="display:none">  <h2>Enter Secret Word 🔐</h2>  <input type="password" id="passwordInput"><br><br>
+
+<button onclick="checkPassword()">Unlock</button>
+
+<p id="hint">Hint: It's your nickname (small letters only) 😉</p>  </div>  <div id="mainContent" style="display:none">  <div class="glass story">  <h1>Happy Birthday 🎉</h1>  <h2 id="typedMessage"></h2>  <p class="storyText">  
+A small world made just for you ✨
+Siel bro, I hope this birthday brings you endless joy and unforgettable memories! May your day be filled with laughter, love, and all the things that make you happiest. You deserve the best on your special day and always! Cheers to another year of amazing adventures and wonderful moments! 🎂🎈
+</p>  </div>  <div class="glass story">  <p class="storyText">  
+Enjoy the moments before it becomes a memory 📸 Hoping today your Birthday looks like this🤞
+</p>  <img id="carouselImage" src="photo1.jpg">  <br><br>
+
+<button onclick="prevSlide()">⬅</button>
+
+<button onclick="nextSlide()">➡</button>
+
+</div>  <div class="glass story">  <p class="storyText">  Make a birthday wish 🎂 and don't tell anyone about it, it's a secret between you and the universe😉
+Now blow out the candles one by one by tapping on it😉
+And see what happens...
+</p>  <img src="cake.png" width="200">  <br><br>
+
+<img src="candle.png" width="30" onclick="blowCandle(this)">  
+<img src="candle.png" width="30" onclick="blowCandle(this)">  
+<img src="candle.png" width="30" onclick="blowCandle(this)">  
+<p id="wishMessage"></p>  </div>  <div class="glass story">  <h2>Birthday Song 🎵
+  Play this song, it's the same one but if you play, it will overlap the previous one and make it sound more magical😉😎
+</h2>  <audio controls>  
+<source src="song.mp3" type="audio/mpeg">  
+</audio>  </div>  <div class="glass story">  <p class="storyText">  And finally...
+one last surprise for you 💫 
+This one took the most time to prepare so I hope you will like it🤞🤞
+Press the button below and enjoy the magic!
+
+</p>  <button onclick="startCountdown()">Open Surprise</button>
+
+<p id="countdownText"></p>  <div id="videoBox" style="display:none">  <video width="90%" controls>  
+<source src="message.mp4" type="video/mp4">  
+</video>  </div>  </div>  </div>  <audio id="bgMusic" loop>  
+<source src="song.mp3" type="audio/mpeg">  
+</audio>  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>  <script>  
+  
+window.onload=function(){  
+  
+setTimeout(()=>{  
+document.getElementById("loader").style.display="none"  
+},2500)  
+  
+showNextStory()  
+  
+}  
+  
+function openGift(){  
+  
+const gift=document.getElementById("giftBox")  
+  
+gift.classList.add("giftOpen")  
+  
+document.getElementById("birthdayTitle").style.display="block"  
+  
+confetti({particleCount:200,spread:120})  
+  
+startMusic()  
+  
+setTimeout(()=>{  
+document.getElementById("giftScreen").style.display="none"  
+document.getElementById("lockScreen").style.display="block"  
+},800)  
+  
+}  
+  
+function checkPassword(){  
+  
+let pass=document.getElementById("passwordInput").value  
+  
+if(pass==="siel"){  
+  
+document.getElementById("lockScreen").style.display="none"  
+document.getElementById("mainContent").style.display="block"  
+  
+confetti({particleCount:200,spread:120})  
+  
+typeMessage()  
+  
+}else{  
+  
+document.getElementById("hint").innerText="Hint: It's your nickname 😉"  
+  
+}  
+  
+}  
+  
+const message="This little birthday universe is just for you 🌸 Hope you like this small surprise. It's a small token of my appreciation for you!😉😉 I did something like this for the first time and enjoyed it so much but next time it will be 10 times better 👍👌! And once agian Happy Birthday hope you get every happiness in this world and if that's not enough, you can have my share of happiness but by the way it's also connected to you so if you will be happy then this whole loop will work😁😎! And sorry I'm not able to come on your birthday but gonna celebrate it in my delusional world! Funny na how we were together for a long time but never talked like this but beautiful things takes time to bloom, like this bond and it's gonna be forever🤞🤞. Atleast here no word limit is there so I can write the everything I want to say! But I know you are gonna read it anyway so why not make it worth reading?😎😁......So listen carefully you are perfect in the way you are..... and I know you're gonna say na I have my flaws so what everyone have their own flaws and that's what make them different and special from others,😊😊 Like there's a japanese phrase 'wabi-sabi' it means to celebrate the beauty of imperfection.....BTW I'm writing this on 18 march exactly one month before your birthday and you are gonna read this on 18 april but I wanna make it sound like I'm talking to you right now! So Hey Siel, Happy Birthday I HOPE NA I BELEIVE YOU ARE GONNA BE HAPPY ON THIS BIRTHDAY AND WILL REMEMBER THIS FOR A LONG SO THAT IT COULD MAKE YOU SMILE! ON THE OTHER SIDE I DON'T WANT ANYTHING IN RETURN JUST YOUR PRESENCE IS LIKE A GIFT FOR ME, BUT IF U REALLY WANNA GIVE ME SOMETHING, THEN PROMISE ME YOU ARE GONNA GIVE ME YOUR OVERTHINKING, BAD THOUGHTS AND ANYTHING THAT'S BEEN BOTHERING YOU! AND ON TOP OF THAT DON'T BE SURPRISE THAT WHY SOMEONE IS DOING THIS FOR U AND THAT IS BECAUSE I'M NOT SOMEONE I'M YOUR HOMIE,YOUR BUDDY,AND BUDDIES DO THINGS LIKE THIS AND ALSO SOME SPECIAL BONDS ONLY FORM IN TEENAGE SO WE SHOULD BETTER WORK ON IT TO MAKE IT UNBREAKABLE AND IT'S MY DUTY TO DO THIS FOR YOU......AND YOU REMEMBER THE ANIME I SUGGESTED YOU.. AREY THE FIRST ONE ''I'M GIVING THE NOBLE LADY A CRASH COURSE IN NAUGHTINESS'' SO IF YOU DON'T BE HAPPY LIKE THIS ALL THE TIME, THEN I'M GONNA PUT A CURSE ON MYSELF LIKE THE ANIME MC SO BETTER BE CAREFUL😁😉! AND THE MOST IMPORTANT THING IS THAT I'M ALSO HAPPY OKAY AND IT'S PART OF MY HOBBY TO MAKE MY CLOSE ONE SMILE AND I CAN GO TO ANY EXTENT FOR DOING THAT, AND I KNOW YOU GONNA BE ANGRY WE ME FOR THIS THING, BUT I WILL TAKE CARE OF MYSELF BCZ AS YOU KNOW I'M SCARED OF YOU😁😁 SO I'M GONNA TAKE CARE OF MYSELF BECAUSE NOW I KNOW BESIDE MY PARENTS THERE'S SOMEONE WHO CARES ABOUT ME AND CAN GET ANGRY WITH ME BTW I LOVE MAKING YOU ANGRY😁😁😁 BECAUSE I THINK YOUR TALKATIVE SIDE BRUSTS OUT WHEN YOU ARE ANGRY, SO I'M GONNA TAKE CARE OF MYSELF BUT WILL ALSO MAKE YOU ANGRY AND THEN GONNA FIX YOUR MOOD,,,,LIKE A WHOLE GAME 😁😉😎// RIGHT KNOW IT'S MY EXAMS SO I MIGHT NOT BE ABLE TO COME ONLINE MOST OF THE TIME BUT ONCE IT'S OVER, I'M GONNA COME TO JAMMU AND WE WILL HAVE FUN,EITHER IT'S VISITING YOUR HOUSE OR TRAVELLING TOGEHER OR CLICKING FUNNY PICTURES TOGEHTER TO KEEP IT AS A MEMORY AND IF YOU WANT YOU CAN ALSO VISIT MY HOUSE AND THEN I WILL INTRODUCE YOU TO MY BROTHERS I KNOW YOU KNOW THEM BUT WE WILL HAVE A WHOLE CONVERSATION LIKE A LITTLE GATHERING....OFCOURSE, MY POETRY RECITING SESSION WILL BE THERE AND WE WILL ENJOY THAT TIME TOGETHER! ONCE AGAIN HAPPY BIRTHDAY I WANTED TO WRITE MORE THINGS! BUT NO WORRIES WE WILL TALK ABOUT IT WHEN I WILL COME HOME IN MY VACATIONS, NOW SCROLL DOWN SLOWLY THERE ARE MORE SURPRISES , I HOPE YOU WILL LIKE IT🤞🤞🤞!"
+
+let i=0  
+  
+function typeMessage(){  
+  
+if(i<message.length){  
+  
+document.getElementById("typedMessage").innerHTML+=message.charAt(i)  
+  
+i++  
+  
+setTimeout(typeMessage,40)  
+  
+}  
+  
+}  
+  
+function startMusic(){  
+  
+let music=document.getElementById("bgMusic")  
+  
+music.volume=0  
+  
+music.play()  
+  
+let fade=setInterval(()=>{  
+  
+if(music.volume<0.5){  
+music.volume+=0.05  
+}else{  
+clearInterval(fade)  
+}  
+  
+},300)  
+  
+}  
+  
+const photos=[  
+"photo1.jpg",  
+"photo2.jpg",  
+"photo3.jpg",  
+"photo4.jpg",
+"photo5.jpg",
+"photo6.jpg"
+]  
+  
+let currentPhoto=0  
+  
+function nextSlide(){  
+  
+currentPhoto++  
+  
+if(currentPhoto>=photos.length){  
+currentPhoto=0  
+}  
+  
+document.getElementById("carouselImage").src=photos[currentPhoto]  
+  
+}  
+  
+function prevSlide(){  
+  
+currentPhoto--  
+  
+if(currentPhoto<0){  
+currentPhoto=photos.length-1  
+}  
+  
+document.getElementById("carouselImage").src=photos[currentPhoto]  
+  
+}  
+  
+let candles=0  
+  
+function blowCandle(c){  
+  
+c.style.opacity="0.2"  
+  
+candles++  
+  
+if(candles==3){  
+  
+document.getElementById("wishMessage").innerText="✨ Your wish might come true ✨"  
+  
+confetti({particleCount:300,spread:150})  
+  
+}  
+  
+}  
+  
+function startCountdown(){  
+  
+let count=3  
+  
+const text=document.getElementById("countdownText")  
+  
+text.innerText="Surprise in "+count  
+  
+let timer=setInterval(()=>{  
+  
+count--  
+  
+if(count>0){  
+  
+text.innerText="Surprise in "+count  
+  
+}else{  
+  
+clearInterval(timer)  
+  
+text.innerText="✨ Surprise! ✨"  
+  
+document.getElementById("videoBox").style.display="block"  
+  
+confetti({particleCount:300,spread:150})  
+  
+}  
+  
+},1000)  
+  
+}  
+  
+const stories=document.querySelectorAll(".story")  
+  
+let index=0  
+  
+function showNextStory(){  
+  
+if(index<stories.length){  
+  
+stories[index].classList.add("show")  
+  
+index++  
+  
+setTimeout(showNextStory,3000)  
+  
+}  
+  
+}  
+  
+</script>  </body>  
+</html>
